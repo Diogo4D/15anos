@@ -67,6 +67,31 @@ video {
     border-bottom: 15px solid transparent;
     margin-left: 5px;
 }
+.links {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 10;
+}
+
+.links a {
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+
+.links a:hover {
+    background: white;
+    color: black;
+}
 </style>
 </head>
 
@@ -83,26 +108,51 @@ video {
     </div>
 </div>
 
+<div class="video-container" id="videoContainer">
+    <video id="video" preload="auto">
+        <source src="video.mp4" type="video/mp4">
+    </video>
+
+    <div class="thumbnail" id="thumbnail">
+        <div class="play-button"></div>
+    </div>
+
+    <div class="links" id="links">
+        <a href="https://maps.google.com" target="_blank">📍 Local da Festa</a>
+        <a href="https://waze.com" target="_blank">🚗 Rota pelo Waze</a>
+        <a href="https://instagram.com" target="_blank">📸 Instagram</a>
+    </div>
+</div>
+
 <script>
 const video = document.getElementById('video');
 const thumbnail = document.getElementById('thumbnail');
 const container = document.getElementById('videoContainer');
+const links = document.getElementById('links');
+
+let isPlaying = false;
 
 container.addEventListener('click', () => {
-    thumbnail.style.opacity = '0';
-    setTimeout(() => {
-        thumbnail.style.display = 'none';
-    }, 400);
-    video.play();
+
+    if (!isPlaying) {
+        thumbnail.style.opacity = '0';
+        setTimeout(() => {
+            thumbnail.style.display = 'none';
+        }, 400);
+
+        video.play();
+        links.style.display = 'flex';
+        isPlaying = true;
+    }
 });
 
-// Garantir que para no último frame
 video.addEventListener('ended', () => {
-    video.pause();
+    isPlaying = false;
 });
 </script>
 
 </body>
 
 </html>
+
 
