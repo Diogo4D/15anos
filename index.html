@@ -27,13 +27,15 @@ body {
     max-width: 600px;
 }
 
+/* VIDEO */
+
 video {
     width: 100%;
     border-radius: 12px;
     display: block;
-    position: relative;
-    z-index: 1;
 }
+
+/* THUMBNAIL (CARTA FECHADA) */
 
 .thumbnail {
     position: absolute;
@@ -49,8 +51,7 @@ video {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: opacity 0.4s ease;
-    z-index: 5;
+    transition: opacity 0.5s ease;
 }
 
 .play-button {
@@ -71,17 +72,17 @@ video {
     margin-left: 5px;
 }
 
-/* LINKS SOBRE O VÍDEO */
+/* LINKS (SÓ APARECEM NO FINAL) */
 
 .links {
     position: absolute;
-    bottom: 30px;
+    bottom: 20%;
     left: 50%;
     transform: translateX(-50%);
     
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    display: none;
+    flex-direction: row;
+    gap: 20px;
     
     z-index: 10;
 }
@@ -90,12 +91,12 @@ video {
     background: rgba(0, 0, 0, 0.75);
     color: white;
     text-decoration: none;
-    padding: 14px 30px;
-    border-radius: 40px;
-    font-size: 16px;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 14px;
     font-weight: bold;
     transition: 0.3s ease;
-    text-align: center;
+    white-space: nowrap;
 }
 
 .links a:hover {
@@ -117,7 +118,7 @@ video {
         <div class="play-button"></div>
     </div>
 
-    <div class="links">
+    <div class="links" id="links">
         <a href="#" target="_blank">🎁 Presentes recomendados</a>
         <a href="#" target="_blank">📍 Localização</a>
         <a href="#" target="_blank">✅ Confirmar presença</a>
@@ -128,21 +129,26 @@ video {
 <script>
 const video = document.getElementById('video');
 const thumbnail = document.getElementById('thumbnail');
+const links = document.getElementById('links');
 
+/* Clique na carta */
 thumbnail.addEventListener('click', () => {
     thumbnail.style.opacity = '0';
     setTimeout(() => {
         thumbnail.style.display = 'none';
-    }, 400);
-
+    }, 500);
+    
     video.play();
 });
 
+/* Quando chegar no final do vídeo */
 video.addEventListener('ended', () => {
     video.pause();
+    links.style.display = 'flex';
 });
 </script>
 
 </body>
 </html>
+
 
