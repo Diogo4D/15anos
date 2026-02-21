@@ -25,13 +25,14 @@ body {
     position: relative;
     width: 90%;
     max-width: 600px;
-    cursor: pointer;
 }
 
 video {
     width: 100%;
     border-radius: 12px;
     display: block;
+    position: relative;
+    z-index: 1;
 }
 
 .thumbnail {
@@ -40,14 +41,16 @@ video {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('thumbnail.jpeg');
+    background-image: url('thumbnail.jpg');
     background-size: cover;
     background-position: center;
     border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
     transition: opacity 0.4s ease;
+    z-index: 5;
 }
 
 .play-button {
@@ -67,25 +70,32 @@ video {
     border-bottom: 15px solid transparent;
     margin-left: 5px;
 }
+
+/* LINKS SOBRE O VÍDEO */
+
 .links {
     position: absolute;
     bottom: 30px;
-    width: 100%;
-    display: none;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 15px;
+    
     z-index: 10;
 }
 
 .links a {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.75);
     color: white;
     text-decoration: none;
-    padding: 12px 25px;
-    border-radius: 30px;
+    padding: 14px 30px;
+    border-radius: 40px;
     font-size: 16px;
+    font-weight: bold;
     transition: 0.3s ease;
+    text-align: center;
 }
 
 .links a:hover {
@@ -97,18 +107,8 @@ video {
 
 <body>
 
-<div class="video-container" id="videoContainer">
-    <video id="video" preload="auto">
-        <source src="video.mp4" type="video/mp4">
-        Seu navegador não suporta vídeo.
-    </video>
+<div class="video-container">
 
-    <div class="thumbnail" id="thumbnail">
-        <div class="play-button"></div>
-    </div>
-</div>
-
-<div class="video-container" id="videoContainer">
     <video id="video" preload="auto">
         <source src="video.mp4" type="video/mp4">
     </video>
@@ -117,42 +117,32 @@ video {
         <div class="play-button"></div>
     </div>
 
-    <div class="links" id="links">
-        <a href="https://maps.google.com" target="_blank">📍 Local da Festa</a>
-        <a href="https://waze.com" target="_blank">🚗 Rota pelo Waze</a>
-        <a href="https://instagram.com" target="_blank">📸 Instagram</a>
+    <div class="links">
+        <a href="#" target="_blank">🎁 Presentes recomendados</a>
+        <a href="#" target="_blank">📍 Localização</a>
+        <a href="#" target="_blank">✅ Confirmar presença</a>
     </div>
+
 </div>
 
 <script>
 const video = document.getElementById('video');
 const thumbnail = document.getElementById('thumbnail');
-const container = document.getElementById('videoContainer');
-const links = document.getElementById('links');
 
-let isPlaying = false;
+thumbnail.addEventListener('click', () => {
+    thumbnail.style.opacity = '0';
+    setTimeout(() => {
+        thumbnail.style.display = 'none';
+    }, 400);
 
-container.addEventListener('click', () => {
-
-    if (!isPlaying) {
-        thumbnail.style.opacity = '0';
-        setTimeout(() => {
-            thumbnail.style.display = 'none';
-        }, 400);
-
-        video.play();
-        links.style.display = 'flex';
-        isPlaying = true;
-    }
+    video.play();
 });
 
 video.addEventListener('ended', () => {
-    isPlaying = false;
+    video.pause();
 });
 </script>
 
 </body>
-
 </html>
-
 
